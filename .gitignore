@@ -1,0 +1,54 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build output
+dist/
+build/
+
+# Dependency directories
+frontend/node_modules/
+backend/node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# React build
+frontend/build/
+
+# Coverage reports
+coverage/
+
+# Misc
+*.tgz
+*.gz
+*.zip
+
+# Optional: ignore database dumps
+dump/
+*.sql
+*.sqlite
