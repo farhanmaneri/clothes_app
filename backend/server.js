@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import imageRoutes from "./routes/imageRoutes.js";
+import productRoutes from "./routes/productRoutes.js"
 import connectDB from "./config/db.js";
 dotenv.config();
  
@@ -12,7 +12,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads")); // serve images
-app.use("/api/images", imageRoutes);
+app.use("/api/products", productRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
