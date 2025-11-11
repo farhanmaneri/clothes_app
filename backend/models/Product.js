@@ -1,11 +1,19 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String },
-  price: { type: Number, required: true },
-  imageUrl: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+const productSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    description: String,
+    price: { type: Number, required: true },
+    imageUrl: String,
+    status: {
+      type: String,
+      enum: ["available", "out"],
+      default: "available",
+    },
+  },
+  { timestamps: true } // adds createdAt/updatedAt
+);
 
-export default mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema);
+export default Product;

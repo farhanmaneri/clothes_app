@@ -12,7 +12,6 @@ export default function Admin() {
   });
   const [success, setSuccess] = useState(false);
   const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -34,41 +33,9 @@ export default function Admin() {
     setForm({ title: "", description: "", price: "", image: null });
   };
 
-  const handleAuth = (e) => {
-    e.preventDefault();
-    if (password === "admin123") {
-      setAuthenticated(true);
-    }
-  };
+ 
 
-  if (!authenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-        <form
-          onSubmit={handleAuth}
-          className="bg-white p-6 rounded shadow-md w-full max-w-sm"
-        >
-          <h2 className="text-xl font-bold text-center text-blue-600 mb-4">
-            Admin Login
-          </h2>
-          <input
-            type="password"
-            placeholder="Enter admin password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-          >
-            Login
-          </button>
-        </form>
-      </div>
-    );
-  }
+ 
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">

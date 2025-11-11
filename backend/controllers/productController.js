@@ -2,18 +2,19 @@ import Product from "../models/Product.js";
 
 export const uploadProduct = async (req, res) => {
   try {
-    const { title, description, price } = req.body;
-    const file = req.file;
+    const { title, description, price, status } = req.body;
+    const imageUrl = req.file?.path;
 
     const newProduct = new Product({
       title,
       description,
       price,
-      imageUrl: file.path, // Cloudinary URL
+      imageUrl,
+      status: status || "available",
     });
 
     await newProduct.save();
-    res.json(newProduct);
+    res.status(201).json(newProduct);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -37,7 +38,6 @@ export const updateProduct = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 export const deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
