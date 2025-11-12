@@ -21,6 +21,12 @@ app.get("/favicon.ico", (req, res) => res.status(204).end());
 app.get("/api", (req, res) => {
   res.send("Backend is running");
 });
+// Catch-all route for root
+app.get("/", (req, res) => {
+  res.send("API is running. Use /api/products, etc.");
+});
+
+// Avoid favicon 404
 
 connectDB();
 
