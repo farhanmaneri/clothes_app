@@ -9,7 +9,21 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+
+
+const allowedOrigins = [
+  "http://localhost:5173", // local dev frontend
+  "https://clothes-app-mocha.vercel.app", // deployed frontend
+];
+
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // if you need cookies/auth headers
+  })
+);
+
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
