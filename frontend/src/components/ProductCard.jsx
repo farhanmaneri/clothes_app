@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
+
 export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
-  const whatsappNumber = "923001234567"; // Replace with your number
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const whatsappNumber = "923320926641"; // Replace with your number
   const message = `Hi, I am interested in buying this item:\n\nTitle: ${product.title}\nPrice: Rs ${product.price}\nImage: ${product.imageUrl}`;
   const encodedMessage = encodeURIComponent(message);
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
@@ -17,10 +20,12 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
         </div>
       )}
 
+      {/* Product Image */}
       <img
         src={product.imageUrl}
         alt={product.title}
-        className={`w-full h-60 object-cover ${
+        onClick={() => setIsModalOpen(true)} // ✅ open modal on click
+        className={`w-full h-80 object-cover cursor-pointer ${
           isOutOfStock ? "opacity-50 grayscale" : ""
         }`}
       />
@@ -30,7 +35,7 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
         <p className="text-sm text-gray-600 mt-1">{product.description}</p>
         <p className="text-blue-600 font-bold mt-2">Rs {product.price}</p>
 
-        {/* WhatsApp Order Icon below price */}
+        {/* WhatsApp Order Icon */}
         {!isOutOfStock && (
           <a
             href={whatsappLink}
@@ -61,6 +66,28 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
           </div>
         )}
       </div>
+
+      {/* ✅ Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={() => setIsModalOpen(false)} // close when clicking outside
+        >
+          <div className="bg-white p-4 rounded shadow-lg max-w-3xl w-full relative">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+            >
+              ✕
+            </button>
+            <img
+              src={product.imageUrl}
+              alt={product.title}
+              className="w-full max-h-[80vh] object-contain"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
