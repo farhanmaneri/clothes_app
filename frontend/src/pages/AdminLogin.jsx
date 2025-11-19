@@ -1,13 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+
+const passWord = import.meta.env.VITE_ADMIN_PASSWORD;
 export default function AdminLogin({ setIsAdmin }) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (password === "admin123") {
+    if (password === passWord) {
       setIsAdmin(true); // ✅ This enables Upload + Logout
       navigate("/admin/home");
     } else {
