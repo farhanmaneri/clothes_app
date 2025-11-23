@@ -14,6 +14,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173", // local dev frontend
   "https://clothes-app-mocha.vercel.app", // deployed frontend
+ "https://clothes-app-wk3v.vercel.app"
 ];
 
 
