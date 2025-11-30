@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useUploadProductMutation } from "../features/apiSlice";
-import { useState } from "react";
 import { Navigate } from "react-router-dom";
+
 export default function Admin() {
   const [uploadProduct, { isLoading }] = useUploadProductMutation();
   const [form, setForm] = useState({
@@ -10,15 +10,19 @@ export default function Admin() {
     price: "",
     image: null,
   });
+  const [preview, setPreview] = useState(null); // ✅ preview state
   const [success, setSuccess] = useState(false);
-  const [password, setPassword] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleFile = (e) => {
-    setForm({ ...form, image: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file) {
+      setForm({ ...form, image: file });
+      setPreview(URL.createObjectURL(file)); // ✅ generate preview URL
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -28,14 +32,14 @@ export default function Admin() {
     formData.append("description", form.description);
     formData.append("price", form.price);
     formData.append("image", form.image);
+
     await uploadProduct(formData);
     setSuccess(true);
+
+    // Reset form
     setForm({ title: "", description: "", price: "", image: null });
+    setPreview(null);
   };
-
- 
-
- 
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
@@ -52,6 +56,23 @@ export default function Admin() {
             ✅ Product uploaded successfully!
           </p>
         )}
+
+        {/* ✅ Image Preview */}
+        {preview && (
+          <div className="mb-4">
+            <img
+              src={preview}
+              alt="Preview"
+              className="w-full h-64 object-contain border rounded"
+            />
+          </div>
+        )}
+<input
+  type="file"
+  onChange={handleFile}
+  className="w-full px-4 py-2 border rounded bg-gray-50"
+  required
+/>
 
         <input
           name="title"
@@ -81,12 +102,6 @@ export default function Admin() {
           className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
-        <input
-          type="file"
-          onChange={handleFile}
-          className="w-full px-4 py-2 border rounded bg-gray-50"
-          required
-        />
 
         <button
           type="submit"

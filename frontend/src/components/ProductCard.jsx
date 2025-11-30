@@ -25,9 +25,7 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
         src={product.imageUrl}
         alt={product.title}
         onClick={() => setIsModalOpen(true)} // ✅ open modal on click
-        className={`w-full h-80 object-cover cursor-pointer ${
-          isOutOfStock ? "opacity-50 grayscale" : ""
-        }`}
+        className={`w-full h-auto object-contain cursor-pointer ${isOutOfStock ? "opacity-50 grayscale" : ""}`}
       />
 
       <div className="p-4">
