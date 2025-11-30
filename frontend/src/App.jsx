@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-
 import AdminHome from "./pages/AdminHome";
 import AdminLogin from "./pages/AdminLogin";
 import UploadProduct from "./pages/UploadProduct";
 
-function App() {
+export default function App() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <Router>
-      {/* ✅ Navbar must be inside Router */}
+      <ScrollToTop />
       <Navbar isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
 
       <Routes>
@@ -36,5 +37,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
