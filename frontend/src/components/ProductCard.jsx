@@ -4,7 +4,11 @@ import { FaWhatsapp } from "react-icons/fa";
 export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const whatsappNumber = "923320926641"; // Replace with your number
+  // ✅ Get salesperson number from URL query string
+  const params = new URLSearchParams(window.location.search);
+  const whatsappNumber = params.get("sales") || "923133134555";
+  // fallback default number if none provided
+
   const message = `Hi, I am interested in buying this item:\n\nTitle: ${product.title}\nPrice: Rs ${product.price}\nImage: ${product.imageUrl}`;
   const encodedMessage = encodeURIComponent(message);
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
@@ -25,7 +29,9 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
         src={product.imageUrl}
         alt={product.title}
         onClick={() => setIsModalOpen(true)} // ✅ open modal on click
-        className={`w-full h-auto object-contain cursor-pointer ${isOutOfStock ? "opacity-50 grayscale" : ""}`}
+        className={`w-full h-auto object-contain cursor-pointer ${
+          isOutOfStock ? "opacity-50 grayscale" : ""
+        }`}
       />
 
       <div className="p-4">
