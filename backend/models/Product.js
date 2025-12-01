@@ -11,6 +11,11 @@ const productSchema = new mongoose.Schema(
       enum: ["available", "out"],
       default: "available",
     },
+    category: {
+      type: String,
+      enum: ["gent", "ladies"], // ✅ restricts to gent or ladies
+      required: true, // ✅ must always have a category
+    },
   },
   { timestamps: true } // adds createdAt/updatedAt
 );

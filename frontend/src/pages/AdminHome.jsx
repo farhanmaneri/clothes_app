@@ -16,6 +16,7 @@ export default function AdminHome() {
     price: "",
     description: "",
     status: "available",
+    category: "gent", // ✅ default category
   });
 
   const handleEdit = (product) => {
@@ -25,6 +26,7 @@ export default function AdminHome() {
       price: product.price,
       description: product.description,
       status: product.status || "available",
+      category: product.category || "gent", // ✅ load category from product
     });
   };
 
@@ -34,7 +36,12 @@ export default function AdminHome() {
   };
 
   const handleDelete = async (id) => {
-    await deleteProduct(id);
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+    if (confirmDelete) {
+      await deleteProduct(id);
+    }
   };
 
   return (
@@ -79,6 +86,19 @@ export default function AdminHome() {
                   <option value="available">Available</option>
                   <option value="out">Out of Stock</option>
                 </select>
+
+                {/* ✅ Category Dropdown */}
+                <select
+                  value={form.category}
+                  onChange={(e) =>
+                    setForm({ ...form, category: e.target.value })
+                  }
+                  className="w-full border px-3 py-1 rounded"
+                >
+                  <option value="gent">Gent</option>
+                  <option value="ladies">Ladies</option>
+                </select>
+
                 <div className="flex gap-2">
                   <button
                     onClick={handleUpdate}

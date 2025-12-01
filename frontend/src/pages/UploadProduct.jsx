@@ -9,8 +9,9 @@ export default function Admin() {
     description: "",
     price: "",
     image: null,
+    category: "", // ✅ new field
   });
-  const [preview, setPreview] = useState(null); // ✅ preview state
+  const [preview, setPreview] = useState(null);
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
@@ -21,7 +22,7 @@ export default function Admin() {
     const file = e.target.files[0];
     if (file) {
       setForm({ ...form, image: file });
-      setPreview(URL.createObjectURL(file)); // ✅ generate preview URL
+      setPreview(URL.createObjectURL(file));
     }
   };
 
@@ -32,12 +33,19 @@ export default function Admin() {
     formData.append("description", form.description);
     formData.append("price", form.price);
     formData.append("image", form.image);
+    formData.append("category", form.category); // ✅ send category
 
     await uploadProduct(formData);
     setSuccess(true);
 
     // Reset form
-    setForm({ title: "", description: "", price: "", image: null });
+    setForm({
+      title: "",
+      description: "",
+      price: "",
+      image: null,
+      category: "",
+    });
     setPreview(null);
   };
 
@@ -67,12 +75,13 @@ export default function Admin() {
             />
           </div>
         )}
-<input
-  type="file"
-  onChange={handleFile}
-  className="w-full px-4 py-2 border rounded bg-gray-50"
-  required
-/>
+
+        <input
+          type="file"
+          onChange={handleFile}
+          className="w-full px-4 py-2 border rounded bg-gray-50"
+          required
+        />
 
         <input
           name="title"
@@ -102,6 +111,18 @@ export default function Admin() {
           className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
+        {/* ✅ Category Dropdown */}
+        <select
+          name="category"
+          value={form.category}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required
+        >
+          <option value="">Select Category</option>
+          <option value="gent">Gent</option>
+          <option value="ladies">Ladies</option>
+        </select>
 
         <button
           type="submit"

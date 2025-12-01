@@ -6,8 +6,7 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
 
   // ✅ Get salesperson number from URL query string
   const params = new URLSearchParams(window.location.search);
-  const whatsappNumber = params.get("sales") || "923133134555";
-  // fallback default number if none provided
+  const whatsappNumber = params.get("sales") || "923133134555"; // fallback default
 
   const message = `Hi, I am interested in buying this item:\n\nTitle: ${product.title}\nPrice: Rs ${product.price}\nImage: ${product.imageUrl}`;
   const encodedMessage = encodeURIComponent(message);
@@ -21,6 +20,13 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
       {isOutOfStock && (
         <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full z-10">
           Out of Stock
+        </div>
+      )}
+
+      {/* ✅ Category Badge */}
+      {product.category && (
+        <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full z-10">
+          {product.category === "gent" ? "Gent" : "Ladies"}
         </div>
       )}
 

@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import AdminHome from "./pages/AdminHome";
 import AdminLogin from "./pages/AdminLogin";
 import UploadProduct from "./pages/UploadProduct";
+import ScrollButton from "./components/ScrollButton";
 
 export default function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -34,6 +35,7 @@ export default function App() {
         />
         <Route path="/admin/upload" element={<UploadProduct />} />
       </Routes>
+      <ScrollButton/>
     </Router>
   );
 }
