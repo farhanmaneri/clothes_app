@@ -51,11 +51,13 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 text-green-600 hover:text-green-700 text-sm"
+            className="mt-3 inline-flex items-center gap-2 text-white bg-green-500 px-4 py-2 rounded-full 
+             shadow-md transform transition duration-300 ease-in-out 
+             hover:bg-green-600 hover:scale-105 hover:shadow-lg animate-pulse"
             title="Order Now via WhatsApp"
           >
-            <FaWhatsapp className="text-lg" />
-            Order Now
+            <FaWhatsapp className="text-lg animate-bounce" />
+            <span className="font-semibold tracking-wide">Order Now</span>
           </a>
         )}
 
