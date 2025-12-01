@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useUploadProductMutation } from "../features/apiSlice";
-import { Navigate } from "react-router-dom";
 
-export default function Admin() {
+export default function UploadProduct() {
   const [uploadProduct, { isLoading }] = useUploadProductMutation();
   const [form, setForm] = useState({
     title: "",
     description: "",
     price: "",
     image: null,
-    category: "", // ✅ new field
+    category: "", // ✅ include category
   });
   const [preview, setPreview] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,6 +28,8 @@ export default function Admin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+
     const formData = new FormData();
     formData.append("title", form.title);
     formData.append("description", form.description);
@@ -35,18 +37,25 @@ export default function Admin() {
     formData.append("image", form.image);
     formData.append("category", form.category); // ✅ send category
 
-    await uploadProduct(formData);
-    setSuccess(true);
+    try {
+      const result = await uploadProduct(formData).unwrap(); // ✅ unwrap to catch errors
+      // console.log("Saved product:", result);
+      setSuccess(true);
 
-    // Reset form
-    setForm({
-      title: "",
-      description: "",
-      price: "",
-      image: null,
-      category: "",
-    });
-    setPreview(null);
+      // Reset form
+      setForm({
+        title: "",
+        description: "",
+        price: "",
+        image: null,
+        category: "",
+      });
+      setPreview(null);
+    } catch (err) {
+      console.error("Upload failed:", err);
+      setError("Failed to upload product. Please check backend logs.");
+      setSuccess(false);
+    }
   };
 
   return (
@@ -63,6 +72,9 @@ export default function Admin() {
           <p className="text-green-600 text-center font-medium">
             ✅ Product uploaded successfully!
           </p>
+        )}
+        {error && (
+          <p className="text-red-600 text-center font-medium">{error}</p>
         )}
 
         {/* ✅ Image Preview */}

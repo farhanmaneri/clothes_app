@@ -2,8 +2,12 @@ import Product from "../models/Product.js";
 
 export const uploadProduct = async (req, res) => {
   try {
-    const { title, description, price, status } = req.body;
+    const { title, description, price, status, category } = req.body; // ✅ include category
     const imageUrl = req.file?.path;
+
+    if (!category) {
+      return res.status(400).json({ error: "Category is required" });
+    }
 
     const newProduct = new Product({
       title,
@@ -11,15 +15,16 @@ export const uploadProduct = async (req, res) => {
       price,
       imageUrl,
       status: status || "available",
+      category, // ✅ save category
     });
 
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {
+    console.error("Upload error:", err);
     res.status(500).json({ error: err.message });
   }
 };
-
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
