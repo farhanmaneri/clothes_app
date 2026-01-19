@@ -69,12 +69,12 @@ export default function ProductCard({ product, isAdmin, onEdit, onDelete }) {
             >
               Edit
             </button>
-            {/* <button
+            <button
               onClick={() => onDelete(product._id)}
               className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
             >
               Delete
-            </button> */}
+            </button>
           </div>
         )}
       </div>
